@@ -1,0 +1,51 @@
+[
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09912.JPG",
+    "detected": {
+      "date": "26/01/2023 19:48:55"
+    }
+  },
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09976.JPG",
+    "detected": {
+      "date": "27/01/2023 14:13:16"
+    }
+  },
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09950.JPG",
+    "detected": {
+      "date": "27/01/2023 14:12:58"
+    }
+  },
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09924.JPG",
+    "detected": {
+      "date": "26/01/2023 19:55:06"
+    }
+  },
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09919.JPG",
+    "detected": {
+      "date": "26/01/2023 19:50:43"
+    }
+  },
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09931.JPG",
+    "detected": {
+      "date": "27/01/2023 14:00:07"
+    }
+  },
+  {
+    "success": true,
+    "filename": "/Users/midknight/Desktop/DSC09925.JPG",
+    "detected": {
+      "date": "26/01/2023 19:55:27"
+    }
+  }
+]
