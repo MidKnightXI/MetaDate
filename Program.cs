@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
+using System.Reflection;
 
-namespace WhichCam;
+namespace Metadate;
 
 internal static class Program
 {
@@ -11,22 +12,18 @@ internal static class Program
             name: "--target",
             description: "The directory containing the images to analyze."){
             IsRequired = true };
-        var output = new Option<FileInfo>(
-            name: "--output",
-            description: "The output file path."){
-            IsRequired = true };
 
         rootCommand.AddOption(target);
-        rootCommand.AddOption(output);
 
-        rootCommand.SetHandler((targ, outp) =>
+        rootCommand.SetHandler((targ) =>
         {
             if (InfosExtractor.Check(targ) is false)
                 return;
 
             var infos = InfosExtractor.RetrieveInformation(targ);
-            InfosExtractor.SaveOutputInformation(infos, outp);
-        }, target, output);
+            var outputPath = Path.Join(AppContext.BaseDirectory, "prediction.json");
+            InfosExtractor.SaveOutputInformation(infos, new FileInfo(outputPath));
+        }, target);
 
         return rootCommand.Invoke(args);
     }

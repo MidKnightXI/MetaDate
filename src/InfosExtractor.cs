@@ -2,20 +2,20 @@
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 
-using WhichCam.Model;
-using WhichCam.Model.JsonContext;
+using Metadate.Model;
+using Metadate.Model.JsonContext;
 
-namespace WhichCam;
+namespace Metadate;
 
 public static class InfosExtractor
 {
     private static readonly string[] _validImageFormat =
-    {
+    [
         ".jpg", ".png", ".gif", ".tiff", ".cr2", ".nef", ".arw", ".dng", ".raf",
         ".rw2", ".erf", ".nrw", ".crw", ".3fr", ".sr2", ".k25", ".kc2", ".mef",
         ".cs1", ".orf", ".mos", ".kdc", ".cr3", ".ari", ".srf", ".srw", ".j6i",
         ".fff", ".mrw", ".x3f", ".mdc", ".rwl", ".pef", ".iiq", ".cxi", ".nksc",
-    };
+    ];
 
     public static List<ResultModel> RetrieveInformation(DirectoryInfo targetDirectory)
     {
@@ -34,9 +34,8 @@ public static class InfosExtractor
 
                 outputInformation.Add(new ResultModel()
                 {
-                    Success = true,
-                    Filename = path,
-                    Detected = cameraInformation
+                    Success = cameraInformation is not null,
+                    Path = path,
                 });
             }
             catch (Exception ex)
@@ -44,9 +43,8 @@ public static class InfosExtractor
                 outputInformation.Add(new ResultModel()
                 {
                     Success = false,
-                    Filename = path,
-                    Detected = null,
-                    ErrorMessage = ex.Message
+                    Path = path,
+                    Error = ex.Message
                 });
             }
         }
@@ -94,12 +92,10 @@ public static class InfosExtractor
         }
     }
 
-    public static void SaveOutputInformation(List<ResultModel> outputInformation,
-                                              FileInfo outputFile)
+    public static void SaveOutputInformation(List<ResultModel> outputInformation, FileInfo outputFile)
     {
         using var stream = outputFile.CreateText();
         var json = JsonSerializer.Serialize(outputInformation, Context.Default.ListResultModel);
-
         stream.Write(json);
     }
 }

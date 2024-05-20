@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WhichCam.Model.JsonContext;
+namespace Metadate.Model.JsonContext;
 
 [JsonSourceGenerationOptions(WriteIndented = true,
                              PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower)]

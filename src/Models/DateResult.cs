@@ -1,4 +1,4 @@
-namespace WhichCam.Model;
+namespace Metadate.Model;
 
 public class DateResult
 {

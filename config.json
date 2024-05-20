@@ -1,16 +1,9 @@
 {
-    "name": "WhichCam",
+    "name": "MetaDate",
     "version": "v1.0.0",
-    "module_type": "detection",
-    "program_filename": "whichcam",
-    "mandatory_arguments": {
-        "target": "--target",
-        "output": "--output"
-    },
-    "optional_arguments": {
-        "help": "-h"
-    },
-    "detected": {
-        "Date": "string"
-    }
+    "description": "Check if the images have a date in their metadatas",
+    "type": "detection",
+    "arguments": null,
+    "binary": "metadate",
+    "runtime": null
 }

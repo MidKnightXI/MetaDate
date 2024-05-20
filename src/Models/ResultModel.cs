@@ -1,15 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WhichCam.Model;
+namespace Metadate.Model;
 
 public class ResultModel
 {
     public required bool Success { get; set; }
-
+    public required string Path { get; set; }
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? ErrorMessage { get; set; }
-
-    public required string Filename { get; set; }
-
-    public required DateResult? Detected { get; set; }
+    public string? Error { get; set; }
 }
