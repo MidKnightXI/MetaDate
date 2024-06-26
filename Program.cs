@@ -14,15 +14,13 @@ internal static class Program
             Arity = ArgumentArity.ExactlyOne
         };
 
-        var output = new Argument<DirectoryInfo>(
-            name: "output",
-            description: "The output file path for the prediction results")
-        {
-            Arity = ArgumentArity.ExactlyOne
-        };
+        var output = new Option<DirectoryInfo>(
+            name: "--output",
+            description: "The output file path for the prediction results",
+            getDefaultValue: () => new DirectoryInfo("./"));
 
         var dateOption = new Option<string>(
-            name: "--date",
+            name: "--orderBy",
             description: "Specify the type of date information to process: 'day', 'month', or 'year'",
             getDefaultValue: () => "day");
 
@@ -36,7 +34,7 @@ internal static class Program
         });
 
         rootCommand.AddArgument(target);
-        rootCommand.AddArgument(output);
+        rootCommand.AddOption(output);
         rootCommand.AddOption(dateOption);
 
         rootCommand.SetHandler((DirectoryInfo targ, DirectoryInfo outputPath, string date) =>

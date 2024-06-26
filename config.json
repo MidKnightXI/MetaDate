@@ -1,9 +1,19 @@
 {
     "name": "MetaDate",
-    "version": "v1.0.0",
-    "description": "Check if the images have a date in their metadatas",
-    "type": "detection",
-    "arguments": null,
+    "version": "v2.0.0",
+    "description": "Order images by their dates included in their metadatas",
+    "type": "complete",
+    "arguments": [
+        {
+            "name": "--output",
+            "type": "string"
+        },
+        {
+            "name": "--orderBy",
+            "type": null,
+            "values": [ "day", "month", "year" ]
+        }
+    ],
     "binary": "metadate",
     "runtime": null
 }
