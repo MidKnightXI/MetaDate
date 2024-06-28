@@ -1,0 +1,93 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build the project for Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: dotnet publish -c Release -r linux-x64 --self-contained -p:PublishAot=true
+
+      - name: Build the project for Windows
+        if: matrix.os == 'windows-latest'
+        run: dotnet publish -c Release -r win-x64 --self-contained -p:PublishAot=true
+
+      - name: Build the project for macOS
+        if: matrix.os == 'macos-latest'
+        run: dotnet publish -c Release -r osx-arm64 --self-contained -p:PublishAot=true
+
+      - name: Archive the build artifacts for Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: tar -czvf metadate-linux.tar.gz -C ./bin/Release/net8.0/linux-x64/publish .
+
+      - name: Archive the build artifacts for Windows
+        if: matrix.os == 'windows-latest'
+        run: Compress-Archive -Path ./bin/Release/net8.0/win-x64/publish\* -DestinationPath metadate-windows.zip
+        shell: pwsh
+
+      - name: Archive the build artifacts for macOS
+        if: matrix.os == 'macos-latest'
+        run: tar -czvf metadate-macos.tar.gz -C ./bin/Release/net8.0/osx-arm64/publish .
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.os }}
+          path: |
+            metadate-linux.tar.gz
+            metadate-windows.zip
+            metadate-macos.tar.gz
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download build artifacts for Linux
+        uses: actions/download-artifact@v3
+        with:
+          name: build-ubuntu-latest
+          path: ./linux
+
+      - name: Download build artifacts for Windows
+        uses: actions/download-artifact@v3
+        with:
+          name: build-windows-latest
+          path: ./windows
+
+      - name: Download build artifacts for macOS
+        uses: actions/download-artifact@v3
+        with:
+          name: build-macos-latest
+          path: ./macos
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./linux/metadate-linux.tar.gz
+            ./windows/metadate-windows.zip
+            ./macos/metadate-macos.tar.gz
