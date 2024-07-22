@@ -6,12 +6,13 @@
     "arguments": [
         {
             "name": "--output",
-            "type": "string"
+            "type": "string",
+            "values": null
         },
         {
             "name": "--orderBy",
             "type": null,
-            "values": [ "day", "month", "year" ]
+            "values": "day;month;year"
         }
     ],
     "binary": "metadate",
